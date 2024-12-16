@@ -1,9 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
         <!-- Sidebar Icon -->
-        <button class="btn btn-outline-secondary me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
-            <i class="bi bi-list"></i> <!-- Bootstrap icon for sidebar (hamburger menu) -->
-        </button>
+        <!-- <button class="btn btn-outline-secondary me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
+            <i class="bi bi-list"></i>
+        </button> -->
+        <img  alt="" src="{{ url_for('static', filename='uploads/file.png') }}" class="rounded-circle" width="60" height="60">
         
         <a class="navbar-brand" href="
     {% if session.get('teacher_id') %}
@@ -14,7 +15,7 @@
         {{ url_for('home') }}
     {% endif %}
 ">
-    Attendance System
+     VIT-SAMS
 </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
