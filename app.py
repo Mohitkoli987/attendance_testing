@@ -36,13 +36,12 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # Configure MySQL
-app.config['MYSQL_HOST'] = '127.0.0.1'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '12345678'
-app.config['MYSQL_DB'] = 'collage6'
-app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
-app.config['SECRET_KEY'] = 'your_secret_key'  # Set a strong secret key
 
+app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST', '127.0.0.1')
+app.config['MYSQL_USER'] = os.getenv('MYSQL_USER', 'root')
+app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD', '12345678')
+app.config['MYSQL_DB'] = os.getenv('MYSQL_DB', 'collage6')
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your_secret_key')
 # Initialize MySQL
 mysql = MySQL(app)
 
