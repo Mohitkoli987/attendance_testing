@@ -83,9 +83,23 @@
                         {% if session.get('teacher_id') %}
                         <li><a class="dropdown-item" href="{{ url_for('teacher_profile') }}">My Profile</a></li>
                         <li><a class="dropdown-item" href="{{ url_for('edit_teacher_profile') }}">Edit Profile</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('teacher_dashboard') }}">dashboard</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('my_courses') }}">My courses</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('add_course') }}">add course</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('view_student_applications') }}">view applications</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('generate_student_report') }}">view report</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('view_requests') }}">view requests</a></li>
+
+                        
+
                         {% elif session.get('student_id') %}
                         <li><a class="dropdown-item" href="{{ url_for('student_profile') }}">My Profile</a></li>
                         <li><a class="dropdown-item" href="{{ url_for('student_edit_profile') }}">Edit Profile</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('view_enrolled_courses') }}">My courses</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('students_courses') }}">available courses</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('apply_absence') }}">absence reason</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('view_application_status') }}">application status</a></li>
+
                         {% endif %}
                         <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
                     </ul>
