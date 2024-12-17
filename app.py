@@ -38,11 +38,17 @@ def allowed_file(filename):
 
 # Configure MySQL
 
-app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST', '127.0.0.1')
-app.config['MYSQL_USER'] = os.getenv('MYSQL_USER', 'root')
-app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD', '12345678')
-app.config['MYSQL_DB'] = os.getenv('MYSQL_DB', 'collage6')
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your_secret_key')
+# Configure MySQL for Clever Cloud
+app.config['MYSQL_HOST'] = 'bmpwybpnexst5mmhhhaf-mysql.services.clever-cloud.com'
+app.config['MYSQL_USER'] = 'ugvylzwoq5itypzz'
+app.config['MYSQL_PASSWORD'] = 'md4eCDVQkkkxj8Y1trT8'
+app.config['MYSQL_DB'] = 'bmpwybpnexst5mmhhhaf'
+app.config['MYSQL_PORT'] = 3306  # Explicit port for MySQL
+app.config['SECRET_KEY'] = 'your_secret_key'  # Use your existing secret key
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+
+
+
 # Initialize MySQL
 mysql = MySQL(app)
 
