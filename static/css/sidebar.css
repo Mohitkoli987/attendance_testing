@@ -13,7 +13,7 @@ font-weight: 600;
 .attendance-sheet {
         position: absolute;
         top: 10.75px;
-        left: 41px;
+        left: 15px;
         line-height: 22.5px;
         font-weight: 600;
   }
@@ -124,14 +124,14 @@ font-weight: 600;
         left: 0px;
         box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
         background-color: #fff;
-        width: 300px;
+        width: 230px;
         height: 841px;
         overflow: hidden;
   }
   .a10 {
         position: absolute;
         top: 490px;
-        left: 20px;
+        left: 15px;
         border-radius: 4px;
         background-color: #fff;
         width: 260px;
@@ -140,7 +140,7 @@ font-weight: 600;
   .a11 {
         position: absolute;
         top: 394px;
-        left: 20px;
+        left: 15px;
         border-radius: 4px;
         background-color: #fff;
         width: 260px;
@@ -149,7 +149,7 @@ font-weight: 600;
   .a13 {
         position: absolute;
         top: 439px;
-        left: 20px;
+        left: 15px;
         border-radius: 4px;
         background-color: #fff;
         width: 260px;

@@ -91,17 +91,39 @@
 <!-- Add your script to highlight the active link and smooth transitions -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const sidebarLinks = document.querySelectorAll('.sidebar .a');
-        const currentPath = window.location.pathname;
+        const sidebar = document.getElementById('sidebar');
+        const toggleSidebarButton = document.getElementById('toggleSidebar');
 
-        sidebarLinks.forEach(link => {
-            const href = link.querySelector('a').getAttribute('href');
-            if (currentPath === href) {
-                link.classList.add('a1');
+        // Toggle sidebar visibility
+        toggleSidebarButton.addEventListener('click', function() {
+            sidebar.classList.toggle('hide-sidebar');
+        });
+
+        // Touch event for closing the sidebar on swipe
+        let startX;
+        let isSwiping = false;
+
+        sidebar.addEventListener('touchstart', function(e) {
+            startX = e.touches[0].clientX;
+            isSwiping = true;
+        });
+
+        sidebar.addEventListener('touchmove', function(e) {
+            if (isSwiping) {
+                let moveX = e.touches[0].clientX;
+                if (startX - moveX > 50) { // Swipe left to close the sidebar
+                    sidebar.classList.add('hide-sidebar');
+                    isSwiping = false;
+                }
             }
+        });
+
+        sidebar.addEventListener('touchend', function() {
+            isSwiping = false;
         });
     });
 </script>
+
 
 <style>
     body {
@@ -157,22 +179,34 @@
         justify-content: flex-start;
         overflow-y: auto;
     }
-
     .sidebar {
-        position: fixed;
-        top: 61px;
-        left: 0;
-        box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
-        background-color: #fff;
-        width: 300px;
-        height: 100vh;
-        overflow-y: auto;
-        transition: transform 0.3s ease-in-out;
-    }
+    position: fixed; /* Ensure the sidebar is fixed on the page */
+    top: 61px;
+    left: 0;
+    box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
+    background-color: #fff;
+    width: 300px;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 1050; /* Ensure sidebar is in front of other content */
+    transition: transform 0.3s ease-in-out;
 
-    .sidebar img {
+
+}
+.hide-sidebar {
+    transform: translateX(-100%); /* Move the sidebar out of view */
+}
+
+
+.sidebar img {
         object-fit: contain;
     }
+
+    .a1 {
+    background-color: #f6f9ff;
+    color: #4154f1;
+    font-weight: bold;
+}
 
     .a:hover, .a1:hover {
         transform: scale(1.05); /* Smooth scaling effect on hover */
