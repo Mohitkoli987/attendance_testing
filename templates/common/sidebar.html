@@ -91,10 +91,10 @@
 <!-- Add your script to highlight the active link and smooth transitions -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const sidebar = document.getElementById('sidebar');
+        const sidebar = document.querySelector('.sidebar');
         const toggleSidebarButton = document.getElementById('toggleSidebar');
 
-        // Toggle sidebar visibility
+        // Toggle sidebar visibility on button click
         toggleSidebarButton.addEventListener('click', function() {
             sidebar.classList.toggle('hide-sidebar');
         });
