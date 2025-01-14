@@ -39,12 +39,16 @@ def allowed_file(filename):
 # Configure MySQL
 
 # Configure MySQL for gooogle cloud
-app.config['MYSQL_USER'] = os.getenv('MYSQL_USER', 'mohitkoli981')  # Your MySQL username
-app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD', 'Mohit@123')  # Your MySQL password
-app.config['MYSQL_DB'] = os.getenv('MYSQL_DB', 'mohitkoli987$collage6')  # Your MySQL database name
+
+
+app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST', '34.136.29.206')  # Use the environment variable or default IP
+app.config['MYSQL_USER'] = os.getenv('MYSQL_USER', 'root')
+app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD', '12345678')
+app.config['MYSQL_DB'] = os.getenv('MYSQL_DB', 'collage6')
+app.config['MYSQL_PORT'] = int(os.getenv('MYSQL_PORT', 3306))  # Default to 3306 if not set
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your_secret_key')
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your_secret_key')  # Your secret key
-app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST', 'mohitkoli981.mysql.pythonanywhere-services.com')  # Your MySQL host
+
 
 
 
