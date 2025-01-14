@@ -38,14 +38,13 @@ def allowed_file(filename):
 
 # Configure MySQL
 
-# Configure MySQL for Clever Cloud
-app.config['MYSQL_HOST'] = 'bmpwybpnexst5mmhhhaf-mysql.services.clever-cloud.com'
-app.config['MYSQL_USER'] = 'ugvylzwoq5itypzz'
-app.config['MYSQL_PASSWORD'] = 'md4eCDVQkkkxj8Y1trT8'
-app.config['MYSQL_DB'] = 'bmpwybpnexst5mmhhhaf'
-app.config['MYSQL_PORT'] = 3306  # Explicit port for MySQL
-app.config['SECRET_KEY'] = 'your_secret_key'  # Use your existing secret key
+# Configure MySQL for gooogle cloud
+app.config['MYSQL_USER'] = os.getenv('MYSQL_USER', 'mohitkoli981')  # Your MySQL username
+app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD', 'Mohit@123')  # Your MySQL password
+app.config['MYSQL_DB'] = os.getenv('MYSQL_DB', 'mohitkoli987$collage6')  # Your MySQL database name
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your_secret_key')  # Your secret key
+app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST', 'mohitkoli981.mysql.pythonanywhere-services.com')  # Your MySQL host
 
 
 
@@ -485,7 +484,6 @@ def teacher_take_attendance(course_id):
         course_year=course['year'],
         course_section=course['section']
     )
-
 
 
 
@@ -1624,90 +1622,92 @@ def view_teacher_profile(teacher_id):
         return redirect(url_for('home'))  # Redirect to home or a fallback page
 
     return render_template('teacher/view_teacher_profile.html', teacher=teacher, courses=courses)
-
 @app.route('/admin/upload_students', methods=['GET', 'POST'])
 def upload_students():
     if request.method == 'POST':
+        # Check if file is in request
         if 'file' not in request.files:
-            flash('No file part', 'danger')
+            flash('No file part in the request.', 'danger')
             return redirect(request.url)
 
         file = request.files['file']
 
         if file.filename == '':
-            flash('No selected file', 'danger')
+            flash('No file selected.', 'danger')
             return redirect(request.url)
 
-        # Save and read the Excel file
+        # Validate and save the file
         if allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
 
-            # Process the Excel file using pandas
             try:
                 import pandas as pd
+                # Read Excel file
                 data = pd.read_excel(file_path)
 
-                # Check if mandatory columns are present
+                # Check for mandatory columns
                 mandatory_columns = ['Roll No', 'First Name', 'Last Name', 'Password']
-                if not all(col in data.columns for col in mandatory_columns):
-                    flash(f'Excel file is missing mandatory columns: {mandatory_columns}', 'danger')
+                missing_columns = [col for col in mandatory_columns if col not in data.columns]
+                if missing_columns:
+                    flash(f'Missing columns: {", ".join(missing_columns)}', 'danger')
                     return redirect(request.url)
 
-                # Set default values for optional columns if they are missing
-                data['Branch'] = data.get('Branch', 'Unknown')  # Default to 'Unknown' if not provided
-                data['Year'] = data.get('Year', 1)  # Default to 1st year if not provided
-                data['Section'] = data.get('Section', 'A')  # Default section if not provided
-                data['Email'] = data.get('Email', '')  # Optional, default to empty if not provided
+                # Fill missing optional columns with default values
+                data['Branch'] = data.get('Branch', 'Unknown').fillna('Unknown')
+                data['Year'] = data.get('Year', 1).fillna(1).astype(int)
+                data['Section'] = data.get('Section', 'A').fillna('A')
+                data['Email'] = data.get('Email', '').fillna('')
 
-                # Insert students into the database
+                # Database operations
                 cursor = mysql.connection.cursor()
                 total_students = len(data)
                 added_students = 0
                 skipped_students = 0
 
-                for index, row in data.iterrows():
-                    roll_no = row['Roll No']
-                    first_name = row['First Name']
-                    last_name = row['Last Name']
-                    branch = row['Branch']
-                    year = int(row['Year'])
-                    email = row['Email']
-                    section = row['Section']
-                    password = row['Password']
+                for _, row in data.iterrows():
+                    try:
+                        roll_no = str(row['Roll No'])
+                        first_name = str(row['First Name'])
+                        last_name = str(row['Last Name'])
+                        branch = str(row['Branch'])
+                        year = int(row['Year'])
+                        email = str(row['Email'])
+                        section = str(row['Section'])
+                        password = str(row['Password'])
 
-                    # Check if student already exists
-                    cursor.execute('SELECT * FROM students WHERE roll_no = %s', (roll_no,))
-                    existing_student = cursor.fetchone()
+                        # Check if student already exists
+                        cursor.execute('SELECT * FROM students WHERE roll_no = %s', (roll_no,))
+                        if cursor.fetchone():
+                            skipped_students += 1
+                            continue
 
-                    if existing_student:
+                        # Insert student into database
+                        cursor.execute(
+                            '''INSERT INTO students 
+                            (roll_no, first_name, last_name, email, branch, year, section, password) 
+                            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)''',
+                            (roll_no, first_name, last_name, email, branch, year, section, generate_password_hash(password))
+                        )
+                        added_students += 1
+                    except Exception as e:
                         skipped_students += 1
-                        flash(f"Student with Roll No {roll_no} already exists.", 'warning')
-                        continue
-
-                    # Insert the student into the database
-                    cursor.execute(
-                        'INSERT INTO students (roll_no, first_name, last_name, email, branch, year, section, password) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
-                        (roll_no, first_name, last_name, email, branch, year, section, generate_password_hash(password))
-                    )
-                    added_students += 1
+                        flash(f"Error with Roll No {row['Roll No']}: {str(e)}", 'warning')
 
                 mysql.connection.commit()
                 cursor.close()
 
-                flash(f'Students registered successfully: {added_students}/{total_students} added, {skipped_students} skipped.', 'success')
+                flash(f'Successfully added {added_students} students. Skipped {skipped_students} due to issues.', 'success')
             except Exception as e:
-                mysql.connection.rollback()  # Rollback on error
+                mysql.connection.rollback()
                 flash(f"Error processing file: {str(e)}", 'danger')
-
         else:
-            flash('Invalid file type. Only Excel files are allowed.', 'danger')
-        
+            flash('Invalid file type. Please upload an Excel file.', 'danger')
+
         return redirect(url_for('upload_students'))
 
-    return render_template('admin/upload_students.html') 
-
+    return render_template('admin/upload_students.html')
 
 
 
@@ -2413,7 +2413,6 @@ def admin_view_courses():
     # Render the template
     return render_template('admin/admin_view_courses.html', courses=courses, teachers=teachers, timetable=timetable)
 
-
 @app.route('/admin/add_course', methods=['GET', 'POST'])
 def admin_add_course():
     if request.method == 'GET':
@@ -2422,33 +2421,43 @@ def admin_add_course():
         teachers = cur.fetchall()
         cur.close()
         return render_template('admin/admin_add_course.html', teachers=teachers)
-    
+
     if request.method == 'POST':
-        # Extract form data
-        name = request.form['name']
-        teacher_id = request.form['teacher_id']
-        year = request.form['year']
-        branch = request.form['branch']
-        section = request.form['section']
-        semester = request.form['semester']
-        slot = request.form['slot']
-        course_type = request.form['type']
-        days = request.form['days']
-        classroom_lab_id = request.form['classroom_lab_id']
-        date = request.form['date']
-        
-        # Insert into the database
-        cur = mysql.connection.cursor()
-        query = """
-            INSERT INTO courses 
-            (name, teacher_id, year, branch, section, semester, slot, type, days, classroom_lab_id, date)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-        """
-        values = (name, teacher_id, year, branch, section, semester, slot, course_type, days, classroom_lab_id, date)
-        cur.execute(query, values)
-        mysql.connection.commit()
-        cur.close()
-        return "Course Added Successfully!"
+        try:
+            # Extract form data
+            name = request.form.get('name')
+            teacher_id = request.form.get('teacher_id')
+            year = request.form.get('year')
+            branch = request.form.get('branch')
+            section = request.form.get('section')
+            semester = request.form.get('semester')
+            slot = request.form.get('slot')
+            course_type = request.form.get('type')
+            days = request.form.get('days')
+            classroom_lab_id = request.form.get('classroom_lab_id')
+            date = request.form.get('date')
+
+            # Validate mandatory fields
+            if not all([name, teacher_id, year, branch, section, semester, slot, course_type, days, classroom_lab_id, date]):
+                return "All fields are required!", 400
+
+            # Insert into the database
+            cur = mysql.connection.cursor()
+            query = """
+                INSERT INTO courses 
+                (name, teacher_id, year, branch, section, semester, slot, type, days, classroom_lab_id, date)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """
+            values = (name, teacher_id, year, branch, section, semester, slot, course_type, days, classroom_lab_id, date)
+            cur.execute(query, values)
+            mysql.connection.commit()
+            cur.close()
+
+            return "Course Added Successfully!"
+        except Exception as e:
+            return f"An error occurred: {str(e)}", 500
+
+
 
 @app.route('/admin/student_report', methods=['GET', 'POST'])
 def student_report():

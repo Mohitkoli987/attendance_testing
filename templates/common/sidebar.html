@@ -91,37 +91,37 @@
 <!-- Add your script to highlight the active link and smooth transitions -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const sidebar = document.querySelector('.sidebar');
-        const toggleSidebarButton = document.getElementById('toggleSidebar');
+    const sidebar = document.querySelector('.sidebar');
+    const toggleSidebarButton = document.getElementById('toggleSidebar');
 
-        // Toggle sidebar visibility on button click
-        toggleSidebarButton.addEventListener('click', function() {
-            sidebar.classList.toggle('hide-sidebar');
-        });
-
-        // Touch event for closing the sidebar on swipe
-        let startX;
-        let isSwiping = false;
-
-        sidebar.addEventListener('touchstart', function(e) {
-            startX = e.touches[0].clientX;
-            isSwiping = true;
-        });
-
-        sidebar.addEventListener('touchmove', function(e) {
-            if (isSwiping) {
-                let moveX = e.touches[0].clientX;
-                if (startX - moveX > 50) { // Swipe left to close the sidebar
-                    sidebar.classList.add('hide-sidebar');
-                    isSwiping = false;
-                }
-            }
-        });
-
-        sidebar.addEventListener('touchend', function() {
-            isSwiping = false;
-        });
+    // Toggle sidebar visibility on button click
+    toggleSidebarButton.addEventListener('click', function() {
+        sidebar.classList.toggle('hide-sidebar');
     });
+
+    // Touch event for closing the sidebar on swipe
+    let startX;
+    let isSwiping = false;
+
+    sidebar.addEventListener('touchstart', function(e) {
+        startX = e.touches[0].clientX;
+        isSwiping = true;
+    });
+
+    sidebar.addEventListener('touchmove', function(e) {
+        if (isSwiping) {
+            let moveX = e.touches[0].clientX;
+            if (startX - moveX > 50) { // Swipe left to close the sidebar
+                sidebar.classList.add('hide-sidebar');
+                isSwiping = false;
+            }
+        }
+    });
+
+    sidebar.addEventListener('touchend', function() {
+        isSwiping = false;
+    });
+});
 </script>
 
 
@@ -136,7 +136,7 @@
     .attendance-sheet, .add-course, .view-students, .edit-profile {
         position: absolute;
         top: 10.75px;
-        left: 15px;
+        left: 41px;
         line-height: 22.5px;
         font-weight: 600;
         text-decoration: none;
@@ -185,7 +185,7 @@
     left: 0;
     box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
     background-color: #fff;
-    width: 200px;
+    width: 300px;
     height: 100vh;
     overflow-y: auto;
     z-index: 1050; /* Ensure sidebar is in front of other content */
