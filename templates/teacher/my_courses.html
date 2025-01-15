@@ -6,70 +6,84 @@
 <style>
     .list-group-item {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 25px;
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px 20px;
         background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
         border-radius: 10px;
-        margin-bottom: 10px;
-        transition: background-color 0.3s;
+        margin-bottom: 15px;
+        transition: background-color 0.3s, transform 0.2s;
     }
 
     .list-group-item:hover {
-        background-color: #e2e6ea;
+        background-color: #e9ecef;
+        transform: translateY(-3px);
+    }
+
+    .course-title {
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: #343a40;
     }
 
     .course-actions {
         display: flex;
-        flex-wrap: nowrap;
+        flex-wrap: wrap;
         gap: 10px;
-        background-color: #e9ecef;
-        padding: 10px;
-        border-radius: 8px;
     }
 
     .course-actions .btn {
         flex-grow: 1;
         white-space: nowrap;
-    }
-
-    .card-body {
-        padding: 20px;
-        margin: auto;
+        font-size: 0.9rem;
     }
 
     .card {
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), 0 12px 12px rgba(0, 0, 0, 0.15);
-        width: 100%;
-        max-width: 1200px;
-        margin: auto;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        border: none;
         border-radius: 15px;
-        overflow: hidden;
     }
 
     .btn {
-        transition: transform 0.2s;
+        transition: transform 0.2s, background-color 0.3s;
     }
 
     .btn:hover {
         transform: scale(1.05);
     }
 
-    .my-courses {
+    .my-courses-title {
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
+        font-size: 1.8rem;
         font-weight: bold;
         color: #495057;
     }
+
+    @media (max-width: 768px) {
+        .list-group-item {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .course-actions {
+            justify-content: center;
+        }
+
+        .my-courses-title {
+            font-size: 1.5rem;
+        }
+    }
 </style>
 
-<div class="container-fluid mt-5" style="padding-top: 65px;">
-    <div class="row">
-        <div class="col-md-9">
-            <h2 class="my-courses">My Courses</h2>
+<div class="container mt-5" style="padding-top: 65px;">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-md-12">
+            <h2 class="my-courses-title">My Courses</h2>
 
-            <div class="d-flex justify-content-end mb-3">
-                <a href="{{ url_for('add_course') }}" class="btn btn-success">Add Course</a>
+            <div class="d-flex justify-content-end mb-4">
+                <a href="{{ url_for('add_course') }}" class="btn btn-success btn-lg">Add Course</a>
             </div>
 
             <div class="card shadow-lg">
@@ -78,16 +92,14 @@
                         {% if courses %}
                         {% for course in courses %}
                         <li class="list-group-item">
-                            <div>
-                                <h6 class="mb-0">{{ course.name }}</h6>
-                            </div>
+                            <div class="course-title">{{ course.name }}</div>
                             <div class="course-actions">
                                 <a href="{{ url_for('teacher_take_attendance', course_id=course.id) }}" class="btn btn-sm btn-primary">Take Attendance</a>
                                 <a href="{{ url_for('view_attendance', course_id=course.id) }}" class="btn btn-sm btn-secondary">View Attendance</a>
                                 <a href="{{ url_for('add_student_to_course', course_id=course.id) }}" class="btn btn-sm btn-primary">Add Student</a>
                                 <a href="{{ url_for('notify_students', course_id=course.id) }}" class="btn btn-sm btn-secondary">Notify Students</a>
                                 <a href="{{ url_for('edit_course', course_id=course.id) }}" class="btn btn-sm btn-primary">Edit Course</a>
-                                <a href="{{ url_for('delete_course', course_id=course.id) }}" class="btn btn-sm btn-secondary">Delete Course</a>
+                                <a href="{{ url_for('delete_course', course_id=course.id) }}" class="btn btn-sm btn-danger">Delete Course</a>
                                 <a href="{{ url_for('view_students', course_id=course.id) }}" class="btn btn-sm btn-primary">View Students</a>
                             </div>
                         </li>
