@@ -100,27 +100,11 @@
     });
 
     // Touch event for closing the sidebar on swipe
-    let startX;
-    let isSwiping = false;
+    
 
-    sidebar.addEventListener('touchstart', function(e) {
-        startX = e.touches[0].clientX;
-        isSwiping = true;
-    });
+    
 
-    sidebar.addEventListener('touchmove', function(e) {
-        if (isSwiping) {
-            let moveX = e.touches[0].clientX;
-            if (startX - moveX > 50) { // Swipe left to close the sidebar
-                sidebar.classList.add('hide-sidebar');
-                isSwiping = false;
-            }
-        }
-    });
-
-    sidebar.addEventListener('touchend', function() {
-        isSwiping = false;
-    });
+    
 });
 </script>
 
