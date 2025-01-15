@@ -3,66 +3,68 @@
 {% block title %}Available Courses{% endblock %}
 
 {% block content %}
-<div class="container mt-5" style="margin-left: 50px; padding-top: 65px;" >
-    <h2>Available Courses</h2>
+<div class="container mt-5" style="padding-top: 65px;">
+    <h2 class="text-center mb-4" style="font-family: 'Poppins', sans-serif; font-weight: 600; color: #4A4A4A;">Available Courses</h2>
     
     <!-- Filter Form -->
-    <form method="GET" class="mb-3">
+    <form method="GET" class="mb-4 p-3 shadow-sm rounded" style="background-color: #f9f9f9;">
         <div class="form-row">
-            <div class="col-md-4">
-                <input type="text" name="branch" class="form-control" placeholder="Branch" value="{{ request.args.get('branch', '') }}">
+            <div class="col-md-4 mb-3">
+                <input type="text" name="branch" class="form-control" placeholder="Branch" value="{{ request.args.get('branch', '') }}" style="border-radius: 5px; border: 1px solid #ccc;">
             </div>
-            <div class="col-md-4">
-                <input type="text" name="year" class="form-control" placeholder="Year" value="{{ request.args.get('year', '') }}">
+            <div class="col-md-4 mb-3">
+                <input type="text" name="year" class="form-control" placeholder="Year" value="{{ request.args.get('year', '') }}" style="border-radius: 5px; border: 1px solid #ccc;">
             </div>
-            <div class="col-md-4">
-                <input type="text" name="section" class="form-control" placeholder="Section" value="{{ request.args.get('section', '') }}">
+            <div class="col-md-4 mb-3">
+                <input type="text" name="section" class="form-control" placeholder="Section" value="{{ request.args.get('section', '') }}" style="border-radius: 5px; border: 1px solid #ccc;">
             </div>
         </div>
-        <button type="submit" class="btn btn-primary mt-3">Filter</button>
+        <button type="submit" class="btn btn-primary w-100" style="font-size: 16px;">Filter</button>
     </form>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Course Name</th>
-                <th>Teacher</th>
-                <th>Branch</th>
-                <th>Year</th>
-                <th>Section</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Classroom/Lab ID</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for course in available_courses %}
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered" style="background-color: #fff; border: 1px solid #ddd;">
+            <thead class="thead-dark" style="background-color: #343a40; color: #fff;">
                 <tr>
-                    <td>{{ course.name }}</td>
-                    <td>{{ course.teacher_name }}</td>
-                    <td>{{ course.branch }}</td>
-                    <td>{{ course.year }}</td>
-                    <td>{{ course.section }}</td>
-                    <td>{{ course.date }}</td>
-                    <td>{{ course.time if course.time else course.slot }}</td>
-                    <td>{{ course.classroom_lab_id }}</td>
-                    <td>
-                        {% if course.id in enrolled_courses %}
-                            <button class="btn btn-success" disabled>Enrolled</button>
-                        {% elif course.id in requested_courses %}
-                            <form method="POST" action="{{ url_for('cancel_request_course', course_id=course.id) }}">
-                                <button type="submit" class="btn btn-danger">Cancel Request</button>
-                            </form>
-                        {% else %}
-                            <form method="POST" action="{{ url_for('request_enroll_course', course_id=course.id) }}">
-                                <button type="submit" class="btn btn-warning">Request to Join</button>
-                            </form>
-                        {% endif %}
-                    </td>
+                    <th>Course Name</th>
+                    <th>Teacher</th>
+                    <th>Branch</th>
+                    <th>Year</th>
+                    <th>Section</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Classroom/Lab ID</th>
+                    <th>Action</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for course in available_courses %}
+                    <tr>
+                        <td style="font-weight: 500;">{{ course.name }}</td>
+                        <td>{{ course.teacher_name }}</td>
+                        <td>{{ course.branch }}</td>
+                        <td>{{ course.year }}</td>
+                        <td>{{ course.section }}</td>
+                        <td>{{ course.date }}</td>
+                        <td>{{ course.time if course.time else course.slot }}</td>
+                        <td>{{ course.classroom_lab_id }}</td>
+                        <td>
+                            {% if course.id in enrolled_courses %}
+                                <button class="btn btn-success btn-sm px-3" style="font-size: 14px;" disabled>Enrolled</button>
+                            {% elif course.id in requested_courses %}
+                                <form method="POST" action="{{ url_for('cancel_request_course', course_id=course.id) }}">
+                                    <button type="submit" class="btn btn-danger btn-sm px-3" style="font-size: 14px;">Cancel Request</button>
+                                </form>
+                            {% else %}
+                                <form method="POST" action="{{ url_for('request_enroll_course', course_id=course.id) }}">
+                                    <button type="submit" class="btn btn-warning btn-sm px-3" style="font-size: 14px;">Request to Join</button>
+                                </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}

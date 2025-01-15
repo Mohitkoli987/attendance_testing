@@ -9,13 +9,17 @@ handlers:
   script: auto
 
 env_variables:
-  MYSQL_HOST: '34.136.29.206'  # Ensure this IP is accessible
-  MYSQL_USER: 'root'           # Confirm username
-  MYSQL_PASSWORD: '12345678'   # Confirm password
-  MYSQL_DB: 'collage6'         # Ensure database exists
-  SECRET_KEY: 'your_secret_key'  # Flask secret key
+  MYSQL_HOST: '34.136.29.206'  # Ensure this IP is accessible and the MySQL database is reachable
+  MYSQL_USER: 'root'           # Confirm the MySQL username
+  MYSQL_PASSWORD: '12345678'   # Confirm the MySQL password
+  MYSQL_DB: 'collage6'         # Ensure the database exists
+  SECRET_KEY: 'your_secret_key'  # Flask secret key for session management
 
 automatic_scaling:
   target_cpu_utilization: 0.65
   min_instances: 1
-  max_instances: 5
+  max_instances: 3  # Change this value as necessary
+
+
+# Optional: Set service account to be used by App Engine
+service_account: nomadic-autumn-447716-j4@appspot.gserviceaccount.com

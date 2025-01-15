@@ -1,34 +1,34 @@
-
 {% extends 'common/homebase.html' %}
 
-{% block title %}Apply for absence{% endblock %}
+{% block title %}Apply for Absence{% endblock %}
 
 {% block content %}
-
-<div class="container mt-5"  style="margin-left: 50px; padding-top: 65px;">
-    <h2>Apply for Absence</h2>
-    <form method="POST" action="{{ url_for('apply_absence') }}">
-        <div class="form-group mb-3">
-            <label for="teacher_id">Select Teacher</label>
-            <select name="teacher_id" class="form-control">
+<div class="container mt-5" style="max-width: 600px; padding-top: 65px;">
+    <h2 class="text-center mb-4" style="font-family: 'Poppins', sans-serif; font-weight: 600; color: #4A4A4A;">Apply for Absence</h2>
+    <form method="POST" action="{{ url_for('apply_absence') }}" class="shadow-lg p-4 rounded" style="background: #f9f9f9;">
+        <div class="form-group mb-4">
+            <label for="teacher_id" class="form-label" style="font-weight: 500; color: #333;">Select Teacher</label>
+            <select name="teacher_id" class="form-control" style="border-radius: 5px; border: 1px solid #ccc;">
                 {% for teacher in teachers %}
                     <option value="{{ teacher.id }}">{{ teacher.name }} ({{ teacher.department }})</option>
                 {% endfor %}
             </select>
         </div>
-        <div class="form-group mb-3">
-            <label for="date_of_application">Date of Application</label>
-            <input type="date" name="date_of_application" class="form-control" required>
+        <div class="form-group mb-4">
+            <label for="date_of_application" class="form-label" style="font-weight: 500; color: #333;">Date of Application</label>
+            <input type="date" name="date_of_application" class="form-control" style="border-radius: 5px; border: 1px solid #ccc;" required>
         </div>
-        <div class="form-group mb-3">
-            <label for="number_of_days">Number of Days</label>
-            <input type="number" name="number_of_days" class="form-control" required>
+        <div class="form-group mb-4">
+            <label for="number_of_days" class="form-label" style="font-weight: 500; color: #333;">Number of Days</label>
+            <input type="number" name="number_of_days" class="form-control" style="border-radius: 5px; border: 1px solid #ccc;" required>
         </div>
-        <div class="form-group mb-3">
-            <label for="reason">Reason for Absence</label>
-            <textarea name="reason" class="form-control" rows="4" required></textarea>
+        <div class="form-group mb-4">
+            <label for="reason" class="form-label" style="font-weight: 500; color: #333;">Reason for Absence</label>
+            <textarea name="reason" class="form-control" rows="4" style="border-radius: 5px; border: 1px solid #ccc;" required></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Submit Application</button>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary w-100" style="background: #007BFF; border: none; padding: 10px 0; font-size: 16px; font-weight: 600;">Submit Application</button>
+        </div>
     </form>
 </div>
 {% endblock %}

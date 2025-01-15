@@ -9,57 +9,74 @@
         justify-content: space-between;
         align-items: center;
         padding: 15px 25px;
-        background-color: #f8f9fa; /* Light background for the container */
-        border-radius: 10px; /* Rounded corners for the container */
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        transition: background-color 0.3s;
+    }
+
+    .list-group-item:hover {
+        background-color: #e2e6ea;
     }
 
     .course-actions {
         display: flex;
         flex-wrap: nowrap;
-        gap: 10px; /* Add spacing between buttons */
-        background-color: #e9ecef; /* Light background for button section */
-        padding: 10px; /* Add padding to give more space */
-        border-radius: 8px; /* Rounded corners for the buttons container */
+        gap: 10px;
+        background-color: #e9ecef;
+        padding: 10px;
+        border-radius: 8px;
     }
 
     .course-actions .btn {
         flex-grow: 1;
-        white-space: nowrap; /* Prevent buttons from wrapping */
+        white-space: nowrap;
     }
 
-    /* Adjusted card body size */
     .card-body {
-        
-        padding: 20px; /* Adjusted padding for the content */
-        margin: auto; /* Center the card body */
+        padding: 20px;
+        margin: auto;
     }
 
     .card {
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), 0 12px 12px rgba(0, 0, 0, 0.15);
-        width: 1200px; /* Adjusted width for the card */
+        width: 100%;
+        max-width: 1200px;
         margin: auto;
+        border-radius: 15px;
+        overflow: hidden;
     }
 
+    .btn {
+        transition: transform 0.2s;
+    }
+
+    .btn:hover {
+        transform: scale(1.05);
+    }
+
+    .my-courses {
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: bold;
+        color: #495057;
+    }
 </style>
 
-<div class="container-fluid mt-5" style="margin-left: 50px; padding-top: 65px;">
+<div class="container-fluid mt-5" style="padding-top: 65px;">
     <div class="row">
-        <!-- Main content -->
         <div class="col-md-9">
             <h2 class="my-courses">My Courses</h2>
 
-            <!-- Add course button -->
             <div class="d-flex justify-content-end mb-3">
                 <a href="{{ url_for('add_course') }}" class="btn btn-success">Add Course</a>
             </div>
 
-            <!-- Courses List -->
             <div class="card shadow-lg">
                 <div class="card-body">
                     <ul class="list-group">
                         {% if courses %}
                         {% for course in courses %}
-                        
                         <li class="list-group-item">
                             <div>
                                 <h6 class="mb-0">{{ course.name }}</h6>

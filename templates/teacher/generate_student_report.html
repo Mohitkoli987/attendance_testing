@@ -1,6 +1,6 @@
 {% extends 'common/homebase.html' %}
 
-{% block title %}Add Student to Course{% endblock %}
+{% block title %}Generate Student Report{% endblock %}
 
 {% block content %}
     <!-- External CSS -->
@@ -17,7 +17,7 @@
             margin-top: 20px;
         }
         table, th, td {
-            border: 1px solid black;
+            border: 1px solid #dee2e6;
         }
         th, td {
             padding: 10px;
@@ -26,13 +26,16 @@
         .form-group {
             margin-bottom: 15px;
         }
+        .select2-container .select2-selection--single {
+            height: 38px;
+            padding: 6px 12px;
+        }
     </style>
-</head>
-<body>
-    <div class="container mt-5">
+
+    <div class="container mt-5" style="max-width: 800px;">
         <h2 class="text-center mb-4">Generate Student Report</h2>
         
-        <form method="POST">
+        <form method="POST" class="shadow p-4 rounded bg-light">
             <!-- Select Student with Advanced Search -->
             <div class="mb-3">
                 <label for="student" class="form-label">Select Student</label>
@@ -61,53 +64,57 @@
 
             <!-- Date Filters -->
             <div class="form-group">
-                <label for="start_date">From Date:</label>
+                <label for="start_date" class="form-label">From Date:</label>
                 <input type="date" name="start_date" class="form-control" required>
             </div>
 
             <div class="form-group">
-                <label for="end_date">To Date:</label>
+                <label for="end_date" class="form-label">To Date:</label>
                 <input type="date" name="end_date" class="form-control" required>
             </div>
 
             <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary">Generate Report</button>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary w-100">Generate Report</button>
+            </div>
         </form>
 
         {% if report_data %}
         <h3 class="text-center mt-5">Student Attendance Report</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Course Name</th>
-                    <th>Slot</th>
-                    <th>Year</th>
-                    <th>Branch</th>
-                    <th>Section</th>
-                    <th>Teacher Name</th>
-                    <th>Attended Classes</th>
-                    <th>Total Classes</th>
-                    <th>Attendance Percentage</th>
-                    <th>Remark</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for course in report_data %}
-                <tr>
-                    <td>{{ course.course_name }}</td>
-                    <td>{{ course.slot }}</td>
-                    <td>{{ course.course_year }}</td>
-                    <td>{{ course.branch }}</td>
-                    <td>{{ course.section }}</td>
-                    <td>{{ course.teacher_name }}</td>
-                    <td>{{ course.attended_classes }}</td>
-                    <td>{{ course.total_classes }}</td>
-                    <td>{{ (course.attended_classes / course.total_classes * 100) if course.total_classes > 0 else 0 }}%</td>
-                    <td>{{ course.remark }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Course Name</th>
+                        <th>Slot</th>
+                        <th>Year</th>
+                        <th>Branch</th>
+                        <th>Section</th>
+                        <th>Teacher Name</th>
+                        <th>Attended Classes</th>
+                        <th>Total Classes</th>
+                        <th>Attendance Percentage</th>
+                        <th>Remark</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for course in report_data %}
+                    <tr>
+                        <td>{{ course.course_name }}</td>
+                        <td>{{ course.slot }}</td>
+                        <td>{{ course.course_year }}</td>
+                        <td>{{ course.branch }}</td>
+                        <td>{{ course.section }}</td>
+                        <td>{{ course.teacher_name }}</td>
+                        <td>{{ course.attended_classes }}</td>
+                        <td>{{ course.total_classes }}</td>
+                        <td>{{ (course.attended_classes / course.total_classes * 100) if course.total_classes > 0 else 0 }}%</td>
+                        <td>{{ course.remark }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         {% endif %}
     </div>
 
@@ -128,6 +135,4 @@
             });
         });
     </script>
-</body>
 {% endblock %}
-

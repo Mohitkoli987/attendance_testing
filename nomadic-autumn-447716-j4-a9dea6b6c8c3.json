@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "nomadic-autumn-447716-j4",
+  "private_key_id": "a9dea6b6c8c30201b7018c1b5606ca107db40ec0",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDlCM7Pe8xH+QWM\nw5KcAk7M38lkRS0BcVxFeJA2qvZXRWeGKj4Zqv7Bj89+qFYXRl0A63Rb5a0nJwy3\nzJTpgWQU4cGgc4wioVk68hADuDukx21DUOptBDVFFRgLnghI+YUDE7irwC1tmamR\nk3n70P9YPca3PErbXxeYNbeK5VsdhxworjYMvzWhvF2jLXxybj4wfflm40qXJb38\nh6HzPLkvtyBZuHvK+TcgHkTWGTH9iqm7hj1vhBLYiSMJ0YBo5XCdm9xfBCS9J38C\ngpc+jA7zo8F8lNnQBTTZqGfnNw6tW9KZwg2vVRbYdf8yUmQvcCOPQ0LJA5uG6PEl\nsr40cBx9AgMBAAECggEAGrFaGQhemIzHPs6USaZjNLFoMU12n1Js5JPWiuiF6Unn\ndNV7g1ZQdpKiJirMTc4fjLnkR8mO0p9Udh9bw5MW7PAatu6AiJCxa5NGlohkOyIa\n89t8VtREuRZqRQBYCtk5zVABF9M/+CQOhS7g6p5DBC++9yAJwWNlxpGMIJ32boxW\nHa/MAWH1ZXwUgTN4osMQiK5Z01Ci+tiHmwzJGD7Ui+1xoFQZNODMJLiFobyJEnUU\njFDCaW65bbR928T7rlCTpJkujOH2alKxWT7SExtGB3fPpYp6gizyldkq2IioeKTv\nwJRFNeB3pu/ZD09WMR1FZUnPO75UmskvVlbJ0Cl2qQKBgQD500LAU+xEDJZ7k6VE\n5Y+xzHkecEUKOzmWbYTjkbMqr2GxMGmUJGZ8Go2rHN3TAhnx7eCGjEEITmDhpPub\ndvA1EOr/vw51u+mSKuZompiNb/TY/BGM6jQi57xKwWWUv17re18YZXwAPXxN3HdH\nSFeBHwWRrSY8vvttB7tzayfE/wKBgQDqsf7gVRRouCgpm/ey4jZz3XQdEcBLXq/x\niz5l/yKRKECaEf1odLNGRBWmUTDR2Aqo4Ami+PFMfGsJApqFckA+htTR9uJ39gKc\nmwGgVM6IU7FZ4IAUxNrDsMY3gHa/IZ+USCXDi3v+sciOtRjM2ZLRrZphn1Tg/Tnu\nC6lk9uOygwKBgGwnPXqt2lcLbApLvPy6tR6v+q9mwzzOrvukpicu6HXOP2jKIKr1\npziK9lHhyVaUTk8iQFV/WpgR9nc5SYPgVdVjYZkeSVBG7bNNxzn505lHoqRdW+u5\naKDD2gwy9ZsTzi/71Qtmw+wGsk2y6CB//QH1QB/06dzagVaORmSNO0ZZAoGBAMlk\nFe8QcuPtauFRqfrBbLJ+DH5JVjYWuWnO76t8hIAFB3JuD4KL6a5ZDC7cqsTW20bQ\ngNRtRDo65Wok5s2uHXzKHGNTtD/2RYV26a1YOKX5E02pfJ7V0VdtIJpNzRfz1Ujb\npDQpRCxpCE2VDwPxi7ALhVdR7vbltMkVDrXJudfbAoGBAMT8zBiGhRpTCISxnf/1\nyNBvxXOY00C4HeOySEHUmB+W6F/UaKIsBkGez23XiZ0Je2OFmeaJLWFjHdXXjAY2\nBezXrSEIXAsV3cYyy5360x70VT2Sw5KKCwYhfXBb1XodwMex70o8TzUtAXLbKAD9\nwAmoeCsK4mHwQSnuz1/vpL7J\n-----END PRIVATE KEY-----\n",
+  "client_email": "nomadic-autumn-447716-j4@appspot.gserviceaccount.com",
+  "client_id": "109239372381009031422",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/nomadic-autumn-447716-j4%40appspot.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
