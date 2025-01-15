@@ -22,4 +22,4 @@ automatic_scaling:
 
 
 # Optional: Set service account to be used by App Engine
-service_account: nomadic-autumn-447716-j4@appspot.gserviceaccount.com
+
