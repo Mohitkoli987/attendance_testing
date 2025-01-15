@@ -56,10 +56,11 @@
                     <option value="">Search by Course Name, Teacher, Branch, or Year</option>
                     {% for course in courses %}
                     <option value="{{ course.id }}" {% if selected_course and course.id == selected_course.id %}selected{% endif %}>
-                        {{ course.name }} - {{ course.teacher_name }} | Branch: {{ course.branch }} | Year: {{ course.year }} | Slot: {{ course.slot }}
+                        {{ course.name }} | ID: {{ course.id }} | Branch: {{ course.branch }} | Year: {{ course.year }} | Slot: {{ course.slot }}
                     </option>
                     {% endfor %}
                 </select>
+                
             </div>
 
             <!-- Date Filters -->

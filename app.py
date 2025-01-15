@@ -1634,6 +1634,7 @@ def view_teacher_profile(teacher_id):
         return redirect(url_for('home'))  # Redirect to home or a fallback page
 
     return render_template('teacher/view_teacher_profile.html', teacher=teacher, courses=courses)
+
 @app.route('/admin/upload_students', methods=['GET', 'POST'])
 def upload_students():
     if request.method == 'POST':
@@ -2569,7 +2570,7 @@ def generate_student_report():
     cursor.execute("SELECT id, first_name, last_name, roll_no FROM students")  # Fetch first_name and last_name
     students = cursor.fetchall()
     
-    cursor.execute("SELECT id, name, slot FROM courses WHERE teacher_id = %s", (teacher_id,))
+    cursor.execute("SELECT id, name, slot, branch,year FROM courses WHERE teacher_id = %s", (teacher_id,))
     courses = cursor.fetchall()
 
     report_data = []
