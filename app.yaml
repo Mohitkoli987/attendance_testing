@@ -1,0 +1,21 @@
+runtime: python39  # Ensure you're using Python 3.9 or later
+entrypoint: gunicorn -w 2 -b :$PORT app:app  # Match to your app's entry point
+
+handlers:
+- url: /static
+  static_dir: static  # Adjust if 'static' is in a different folder
+
+- url: /.*
+  script: auto
+
+env_variables:
+  MYSQL_HOST: '34.136.29.206'  # Ensure this IP is accessible
+  MYSQL_USER: 'root'           # Confirm username
+  MYSQL_PASSWORD: '12345678'   # Confirm password
+  MYSQL_DB: 'collage6'         # Ensure database exists
+  SECRET_KEY: 'your_secret_key'  # Flask secret key
+
+automatic_scaling:
+  target_cpu_utilization: 0.65
+  min_instances: 1
+  max_instances: 5

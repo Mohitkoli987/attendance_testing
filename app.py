@@ -50,6 +50,14 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your_secret_key')
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 
+# app.config['MYSQL_HOST'] = '34.136.29.206'  # Public IP of your Google Cloud SQL instance
+# app.config['MYSQL_USER'] = 'root'           # MySQL username (make sure it's correct)
+# app.config['MYSQL_PASSWORD'] = '12345678'   # MySQL password (use the correct password)
+# app.config['MYSQL_DB'] = 'collage6'         # Database name you want to connect to
+# app.config['MYSQL_PORT'] = 3306             # Default MySQL port
+# app.config['MYSQL_CURSORCLASS'] = 'DictCursor'  # This allows you to get results as dictionaries
+# app.config['SECRET_KEY'] = 'your_secret_key'
+
 
 
 # Initialize MySQL
