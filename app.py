@@ -2371,7 +2371,6 @@ def admin_view_courses():
         JOIN teachers t ON c.teacher_id = t.id
         WHERE 1=1
     """
-
     params = []
 
     if department:
