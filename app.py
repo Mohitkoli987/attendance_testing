@@ -67,7 +67,12 @@ mysql = MySQL(app)
 @app.route('/')
 def home():
     try:
-        return render_template('common/index.html',)
+        # Check if a teacher or student is already logged in
+        if 'teacher_id' in session:
+            return redirect(url_for('teacher_profile'))  # Redirect to teacher profile/dashboard
+        elif 'student_id' in session:
+            return redirect(url_for('student_profile'))  # Redirect to student profile/dashboard
+        return render_template('common/index.html')  # Default home page for guests
     except Exception as e:
         return str(e)
 
