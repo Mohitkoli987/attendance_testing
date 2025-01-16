@@ -2366,11 +2366,11 @@ def admin_view_courses():
 
     # Build the query dynamically
     query = """
-    SELECT c.*, t.short_name AS teacher_short_name
-    FROM courses c
-    JOIN teachers t ON c.teacher_id = t.id
-    WHERE 1=1
-"""
+        SELECT c.*, t.short_name AS teacher_short_name
+        FROM courses c
+        JOIN teachers t ON c.teacher_id = t.id
+        WHERE 1=1
+    """
 
     params = []
 
