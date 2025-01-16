@@ -3,121 +3,181 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="hero-section d-flex align-items-center justify-content-center text-center" style="height: 100vh; background: url('https://static.vecteezy.com/system/resources/thumbnails/039/843/742/small/ai-generated-the-glasses-with-school-books-in-front-of-a-blackboard-created-by-artificial-intelligence-photo.jpeg') no-repeat center center / cover;">
+<div class="hero-section text-center d-flex align-items-center justify-content-center flex-column" style="height: 100vh; background-image: url('https://static.vecteezy.com/system/resources/thumbnails/039/843/742/small/ai-generated-the-glasses-with-school-books-in-front-of-a-blackboard-created-by-artificial-intelligence-photo.jpeg'); background-size: cover; background-position: center; background-color: rgba(0, 0, 0, 0.5); background-blend-mode: overlay; color: white;">
     <div class="container">
-        <!-- Main Heading -->
-        <h1 class="display-3 text-light">Welcome to VIT-SAMS</h1>
-        <p class="lead text-light">Simplifying education for students and teachers</p>
+        <h1 class="display-3 mb-4" style="margin-top: 20px;">Welcome to VIT-SAMS</h1>
+        <p class="lead mb-4">Simplifying education for students and teachers</p>
+    </div>
 
-        <!-- Buttons to Toggle Login Forms -->
-        <div class="mt-4">
-            <button class="btn btn-outline-light btn-lg mx-2" onclick="showTeacherLogin()">Teacher Login</button>
-            <button class="btn btn-outline-light btn-lg mx-2" onclick="showStudentLogin()">Student Login</button>
+    <!-- Role Selection & Login Container -->
+    <div class="login-container card p-4 shadow-lg mt-3">
+        <h4 class="text-center mb-3">Select Your Role</h4>
+        <div class="d-flex justify-content-center mb-3">
+            <button class="btn btn-outline-primary mx-2 role-btn" onclick="showLogin('teacher')">Teacher</button>
+            <button class="btn btn-outline-success mx-2 role-btn" onclick="showLogin('student')">Student</button>
         </div>
 
-        <!-- Login Forms Overlay -->
-        <div class="forms-overlay mt-5">
-            <!-- Teacher Login Form -->
-            <div id="teacherForm" class="login-form card p-4 mb-4 text-start" style="display: none;">
-                <h3 class="text-center mb-3">Teacher Login</h3>
-                <form method="POST" action="{{ url_for('teacher_login') }}">
-                    <div class="form-group mb-3">
-                        <input type="text" name="email" placeholder="Email" class="form-control">
-                    </div>
-                    <div class="form-group mb-3">
-                        <input type="password" name="password" placeholder="Password" class="form-control">
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Sign in</button>
-                </form>
-                <div class="text-center mt-3">
-                    <p>Don't have an account? <a href="{{ url_for('teacher_signup') }}">Register here</a></p>
+        <!-- Hidden Login Forms -->
+        <div id="teacherLogin" class="login-form" style="display: none;">
+            <h5 class="text-center">Teacher Login</h5>
+            <form method="POST" action="{{ url_for('teacher_login') }}">
+                <div class="form-group mb-3">
+                    <input type="text" name="email" placeholder="Email" class="form-control">
                 </div>
-            </div>
+                <div class="form-group mb-3">
+                    <input type="password" name="password" placeholder="Password" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Sign in</button>
+            </form>
+        </div>
 
-            <!-- Student Login Form -->
-            <div id="studentForm" class="login-form card p-4 mb-4 text-start" style="display: none;">
-                <h3 class="text-center mb-3">Student Login</h3>
-                <form method="POST" action="{{ url_for('student_login') }}">
-                    <div class="form-group mb-3">
-                        <input type="text" name="roll_no" placeholder="Roll Number" class="form-control">
-                    </div>
-                    <div class="form-group mb-3">
-                        <input type="password" name="password" placeholder="Password" class="form-control">
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Sign in</button>
-                </form>
-                <div class="text-center mt-3">
-                    <p>Don't have an account? <a href="{{ url_for('student_signup') }}">Register here</a></p>
+        <div id="studentLogin" class="login-form" style="display: none;">
+            <h5 class="text-center">Student Login</h5>
+            <form method="POST" action="{{ url_for('student_login') }}">
+                <div class="form-group mb-3">
+                    <input type="text" name="roll_no" placeholder="Roll Number" class="form-control">
+                </div>
+                <div class="form-group mb-3">
+                    <input type="password" name="password" placeholder="Password" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-success w-100">Sign in</button>
+            </form>
+        </div>
+
+        <!-- Register Section -->
+        <div class="text-center mt-3">
+            <p>Don't have an account? <a href="{{ url_for('teacher_signup') }}" class="register-link">Register here</a></p>
+        </div>
+    </div>
+</div>
+
+<div class="campus-showcase">
+    <div class="container text-center">
+        <h2 class="campus-title">Our Campus</h2>
+        <div id="campusCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://im.whatshot.in/img/2018/Feb/inst-1518599468.JPG" class="d-block w-100" alt="Main Building">
+                    <div class="carousel-caption">Main Building</div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://images.adsttc.com/media/images/500f/43f4/28ba/0d0c/c700/23e2/slideshow/stringio.jpg?1414333896" class="d-block w-100" alt="Library">
+                    <div class="carousel-caption">Library</div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://images.collegedunia.com/public/college_data/images/campusimage/1522147122Auditorium.jpg" class="d-block w-100" alt="Sports Complex">
+                    <div class="carousel-caption">Sports Complex</div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://images.shiksha.com/mediadata/images/1516603320phpKQtya7.jpeg" class="d-block w-100" alt="Academic Block">
+                    <div class="carousel-caption">Academic Block</div>
                 </div>
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#campusCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#campusCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
         </div>
     </div>
 </div>
 
 <style>
 .hero-section {
+    height: 100vh;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.5));
     color: white;
     text-align: center;
-    position: relative;
-    overflow: hidden;
+    background-size: cover;
+    background-position: center;
 }
 
-.hero-section h1 {
-    font-size: clamp(2rem, 4vw, 4rem);
+.hero-section .display-3 {
     font-weight: bold;
     margin-bottom: 20px;
 }
 
-.hero-section p {
-    font-size: clamp(1rem, 1.5vw, 1.5rem);
-}
-
-.hero-section .btn {
-    padding: 10px 20px;
-    font-size: clamp(1rem, 1.5vw, 1.25rem);
-}
-
-.forms-overlay {
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    max-width: 400px;
-}
-
-.login-form {
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid #ddd;
+.login-container {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 420px;
+    color: white;
 }
 
-@media (max-width: 768px) {
-    .forms-overlay {
-        top: 70%;
-        width: 90%;
-    }
+.login-container h4,
+.login-container h5 {
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
 
-    .hero-section h1 {
-        font-size: clamp(1.5rem, 3vw, 3rem);
-    }
+.role-btn {
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
 
-    .hero-section p {
-        font-size: clamp(1rem, 1.2vw, 1.2rem);
-    }
+.login-container input::placeholder {
+    color: #f0f0f0;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.login-container .form-control {
+    color: white;
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.login-container .btn {
+    font-weight: bold;
+}
+
+.register-section p {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.register-link {
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.campus-showcase {
+    background: #f9f9f9;
+    padding: 50px 0;
+}
+
+.campus-showcase .campus-title {
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+.carousel-inner img {
+    height: 500px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.carousel-caption {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
 }
 </style>
 
 <script>
-    function showTeacherLogin() {
-        document.getElementById('teacherForm').style.display = 'block';
-        document.getElementById('studentForm').style.display = 'none';
-    }
-
-    function showStudentLogin() {
-        document.getElementById('studentForm').style.display = 'block';
-        document.getElementById('teacherForm').style.display = 'none';
-    }
+function showLogin(role) {
+    document.getElementById('teacherLogin').style.display = role === 'teacher' ? 'block' : 'none';
+    document.getElementById('studentLogin').style.display = role === 'student' ? 'block' : 'none';
+}
 </script>
 {% endblock %}

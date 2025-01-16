@@ -2366,11 +2366,12 @@ def admin_view_courses():
 
     # Build the query dynamically
     query = """
-        SELECT c.*, t.name AS teacher_name
-        FROM courses c
-        JOIN teachers t ON c.teacher_id = t.id
-        WHERE 1=1
-    """
+    SELECT c.*, t.short_name AS teacher_short_name
+    FROM courses c
+    JOIN teachers t ON c.teacher_id = t.id
+    WHERE 1=1
+"""
+
     params = []
 
     if department:
@@ -2416,7 +2417,7 @@ def admin_view_courses():
                 for slot in slots:
                     if slot in timetable[day]:
                         timetable[day][slot].append({
-                            "teacher_name": course['teacher_name'],  # Now using teacher's name
+                            "teacher_short_name": course['teacher_short_name'],  # Now using teacher's name
                             "course_name": course['name'],
                             "room_id": course['classroom_lab_id']
                         })

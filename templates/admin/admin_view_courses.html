@@ -125,7 +125,7 @@
                 <!-- Teacher Name Filter -->
                 <div class="form-group">
                     <label for="teacher_name">Search by Teacher:</label>
-                    <select name="teacher_name" id="teacher_name" class="form-control select2">
+                    <select name="short_name" id="short_name" class="form-control select2">
                         <option value="">Search by Teacher Name</option>
                         {% for teacher in teachers %}
                         <option value="{{ teacher.id }}">{{ teacher.name }}</option>
@@ -208,7 +208,7 @@
                 {% for day in ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] %}
                 <td>
                     {% for course in timetable[day][time] %}
-                        <p>{{ course.teacher_name }} - {{ course.course_name }} ({{ course.room_id }})</p>
+                        <p>{{ course.short_name }} - {{ course.course_name }} ({{ course.room_id }})</p>
                     {% endfor %}
                 </td>
                 {% endfor %}
