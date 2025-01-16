@@ -1,38 +1,95 @@
 {% extends "common/homebase2.html" %}
 
 {% block content %}
-<div class="container mt-5" style="margin-left: 50px; padding-top: 10px;">
-    <h2>Search Results for "{{ query }}"</h2>
+<div class="container-fluid position-relative py-4">
+    <!-- Close Button -->
+    <button class="btn-close position-absolute top-0 end-0 m-3" aria-label="Close" onclick="window.history.back();"></button>
 
-    {% if students or teachers %}
-        <div class="list-group">
+    <div class="container mt-5">
+        <h2 class="text-center">Search Results for "{{ query }}"</h2>
+        <hr>
+
+        {% if students or teachers %}
+        <div class="list-group mt-4">
             <!-- Loop through students and display their information -->
             {% for student in students %}
             <a href="{{ url_for('view_student_profile', student_id=student['id']) }}" class="list-group-item list-group-item-action d-flex align-items-center">
-                <img src="{{ url_for('static', filename='uploads/' + (student['photo'] or 'nophoto.jpg')) }}" alt="{{ student['name'] }}'s photo" class="rounded-circle me-3" width="50" height="50">
+                <img src="{{ url_for('static', filename='uploads/' + (student['photo'] or 'nophoto.jpg')) }}" alt="{{ student['first_name'] }}'s photo" class="rounded-circle me-3" width="50" height="50">
                 <div>
-
                     <h5 class="mb-1">{{ student['first_name'] }} {{ student['last_name'] }}</h5>
-
-                    <p class="mb-1">Email: {{ student['email'] }} | Roll No: {{ student['roll_no'] }}</p>
+                    <p class="mb-1 text-muted">Email: {{ student['email'] }} | Roll No: {{ student['roll_no'] }}</p>
                 </div>
             </a>
             {% endfor %}
-        
+
             <!-- Loop through teachers and display their information -->
             {% for teacher in teachers %}
             <a href="{{ url_for('view_teacher_profile', teacher_id=teacher['id']) }}" class="list-group-item list-group-item-action d-flex align-items-center">
                 <img src="{{ url_for('static', filename='uploads/' + (teacher['profile_photo'] or 'nophoto.jpg')) }}" alt="{{ teacher['name'] }}'s photo" class="rounded-circle me-3" width="50" height="50">
                 <div>
-                    <h5 class="mb-1">{{ teacher['name'] }} {% if teacher['short_name'] %} ({{ teacher['short_name'] }}){% endif %}</h5>
-                    <p class="mb-1">Email: {{ teacher['email'] }}</p>
+                    <h5 class="mb-1">{{ teacher['name'] }}{% if teacher['short_name'] %} ({{ teacher['short_name'] }}){% endif %}</h5>
+                    <p class="mb-1 text-muted">Email: {{ teacher['email'] }}</p>
                 </div>
             </a>
             {% endfor %}
-        
         </div>
-    {% else %}
-        <p>No users found matching your search criteria.</p>
-    {% endif %}
+        {% else %}
+        <p class="text-center mt-4 text-muted">No users found matching your search criteria.</p>
+        {% endif %}
+    </div>
 </div>
+
+<style>
+.container-fluid {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    position: relative;
+}
+
+.btn-close {
+    font-size: 1.5rem;
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.btn-close:hover {
+    color: red;
+}
+
+h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.list-group-item {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.list-group-item:hover {
+    background-color: #f1f1f1;
+    transform: translateY(-3px);
+}
+
+img.rounded-circle {
+    object-fit: cover;
+    border: 1px solid #ddd;
+}
+
+.text-muted {
+    font-size: 0.9rem;
+}
+</style>
+
+<script>
+    // Allow close button to redirect back to the previous page
+    function goBack() {
+        window.history.back();
+    }
+</script>
 {% endblock %}
