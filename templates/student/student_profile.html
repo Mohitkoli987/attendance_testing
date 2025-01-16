@@ -14,17 +14,17 @@
 
             <!-- Student Info -->
             <h3 class="mt-3">
-                {{ session.get('student_first_name', '') }} 
-                {% if session.get('student_middle_name') %}
-                    {{ session.get('student_middle_name') }}
+                {{ session.get('student_first_name', '') }}
+                {% if session.get('student_middle_name', '') %}
+                    {{ session.get('student_middle_name', '') }}
                 {% endif %}
                 {{ session.get('student_last_name', '') }}
             </h3>
-            <p>Roll Number: {{ student.roll_no }}</p>
-            <p>Email: {{ student.email }}</p>
-            <p>Contact: {{ student.contact }}</p>
-            <p>Branch: {{ student.branch }}</p>
-            <p>Year: {{ student.year }} Year</p>
+            {% if student.roll_no %}<p>Roll Number: {{ student.roll_no }}</p>{% endif %}
+            {% if student.email %}<p>Email: {{ student.email }}</p>{% endif %}
+            {% if student.contact %}<p>Contact: {{ student.contact }}</p>{% endif %}
+            {% if student.branch %}<p>Branch: {{ student.branch }}</p>{% endif %}
+            {% if student.year %}<p>Year: {{ student.year }} Year</p>{% endif %}
 
             <!-- Edit Profile Button -->
             <a href="{{ url_for('student_edit_profile') }}" class="btn btn-primary mt-3">Edit Profile</a>
@@ -32,3 +32,4 @@
     </div>
 </div>
 {% endblock %}
+

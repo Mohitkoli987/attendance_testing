@@ -1097,7 +1097,7 @@ def student_profile():
     # Ensure session variables are set correctly
     session['student_photo'] = student['photo'] if student['photo'] else 'nophoto.jpg'
     session['student_first_name'] = student['first_name']
-    session['student_middle_name'] = student.get('middle_name', '')  # Middle name can be None
+    session['student_middle_name'] = student['middle_name'] or ''
     session['student_last_name'] = student['last_name']
 
     return render_template('student/student_profile.html', student=student)
