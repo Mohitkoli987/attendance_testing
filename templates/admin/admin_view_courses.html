@@ -34,6 +34,7 @@
             padding: 12px 15px;
             border: 1px solid #ddd;
             text-align: left;
+            cursor: pointer;
         }
         th {
             background-color: #28a745;
@@ -66,6 +67,13 @@
             flex-wrap: wrap;
             gap: 10px;
             margin-bottom: 20px;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -144,7 +152,6 @@
                         <option value="2022">2022</option>
                         <option value="2023">2023</option>
                         <option value="2024">2024</option>
-                        <!-- Add more years as needed -->
                     </select>
                 </div>
                 <!-- Submit Button -->
@@ -186,51 +193,184 @@
             </tbody>
         </table>
     </div>
-<div class="container">
-    <h2>Timetable</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Time</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-                <th>Saturday</th>
-                <th>Sunday</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for time, slots in timetable["Monday"].items() %}
-            <tr>
-                <td>{{ time }}</td>
-                {% for day in ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] %}
-                <td>
-                    {% for course in timetable[day][time] %}
-                        <p>{{ course.teacher_short_name }} - {{ course.course_name }} ({{ course.room_id }})</p>
+    <div class="container">
+        <h2>Timetable</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <th>Sunday</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for time, slots in timetable["Monday"].items() %}
+                <tr>
+                    <td>{{ time }}</td>
+                    {% for day in ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] %}
+                    <td onclick="slotClicked('{{ day }}', '{{ time }}', '', '', '', '', '', '', '', '', '', '')" style="cursor: pointer;">
+                        {% if timetable[day][time] %}
+                            {% for course in timetable[day][time] %}
+                            <p>
+                                <a href="#" onclick="event.stopPropagation(); editCourse('{{ day }}', '{{ time }}', '{{ course.id }}', '{{ course.course_name }}', '{{ course.teacher_id }}', '{{ course.branch }}', '{{ course.type }}', '{{ course.room_id }}', '{{ course.date }}')">
+                                    {{ course.teacher_short_name }} {{ course.course_name }} -({{ course.room_id }} {{ course.section }} {{ course.year }} {{ course.semester }} )
+                                </a>
+                            </p>
+                            {% endfor %}
+                        {% else %}
+                            <a href="#" onclick="event.stopPropagation(); slotClicked('{{ day }}', '{{ time }}', '', '', '', '', '', '', '', '', '', '')"></a>
+                        {% endif %}
+                    </td>
                     {% endfor %}
-                </td>
+                </tr>
                 {% endfor %}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
- 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#teacher_name').select2({
-            placeholder: 'Search by Teacher Name',
-            allowClear: true,
-            width: '100%' // Ensures the dropdown takes up the full width of its container
-        });
-    });
-</script>
+            </tbody>
+        </table>
 
+        <!-- Add/Edit Course Section -->
+        <div id="courseFormSection" style="display: none; margin-top: 20px; border: 1px solid #ccc; padding: 20px; border-radius: 5px;">
+            <h3 id="formTitle">Add/Edit Course</h3>
+            <form id="courseForm" method="POST" action="/admin/add_course">
+                <input type="hidden" id="course_id" name="course_id">
+
+                <label for="day">Day:</label>
+                <input type="text" id="day" name="days" readonly>
+
+                <label for="slot">Slot:</label>
+                <input type="text" id="slot" name="slot" readonly>
+
+                <label for="name">Course Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="teacher_id">Teacher:</label>
+                <select id="teacher_id" name="teacher_id" required>
+                    {% for teacher in teachers %}
+                    <option value="{{ teacher.id }}">{{ teacher.name }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="branch">Branch:</label>
+                <select id="branch" name="branch" required>
+                    <option value="">-- Select Branch --</option>
+                    <option value="INFT">INFT</option>
+                    <option value="CMPN">CMPN</option>
+                    <option value="EXCS">EXCS</option>
+                    <option value="EXTC">EXTC</option>
+                    <option value="BIOM">BIOM</option>
+                </select>
+
+                <label for="section">Section:</label>
+                <select id="section" name="section" required>
+                    <option value="">-- Select Section --</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                </select>
+
+                <label for="year">Year:</label>
+                <select id="year" name="year" required>
+                    <option value="">-- Select Year --</option>
+                    <option value="1">1st Year</option>
+                    <option value="2">2nd Year</option>
+                    <option value="3">3rd Year</option>
+                    <option value="4">4th Year</option>
+                </select>
+
+                <label for="semester">Semester:</label>
+                <select id="semester" name="semester" required>
+                    <option value="">-- Select Semester --</option>
+                    <option value="I">I</option>
+                    <option value="II">II</option>
+                    <option value="III">III</option>
+                    <option value="IV">IV</option>
+                    <option value="V">V</option>
+                    <option value="VI">VI</option>
+                    <option value="VII">VII</option>
+                    <option value="VIII">VIII</option>
+                </select>
+
+                <label for="type">Course Type:</label>
+                <select id="type" name="type" required>
+                    <option value="">-- Select Course Type --</option>
+                    <option value="Lecture">Lecture</option>
+                    <option value="Lab">Lab</option>
+                </select>
+
+                <label for="classroom_lab_id">Classroom/Lab ID:</label>
+                <input type="text" id="classroom_lab_id" name="classroom_lab_id">
+
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date">
+
+                <button type="submit">Save</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function addCourse(day, slot) {
+            // Reset form for new course
+            document.getElementById('courseForm').reset();
+            document.getElementById('course_id').value = ''; // Clear course ID
+            document.getElementById('day').value = day;
+            document.getElementById('slot').value = slot;
+            document.getElementById('formTitle').innerText = 'Add Course';
+            document.getElementById('courseFormSection').style.display = 'block';
+        }
+
+        function editCourse(day, slot, courseId, name, teacherId, branch, type, classroomLabId, date) {
+            // Log parameters for debugging
+            console.log({ day, slot, courseId, name, teacherId, branch, type, classroomLabId, date });
+
+            // Populate the form with the provided data
+            document.getElementById('course_id').value = courseId || '';
+            document.getElementById('day').value = day;
+            document.getElementById('slot').value = slot;
+            document.getElementById('name').value = name || '';
+            document.getElementById('teacher_id').value = teacherId || '';
+            document.getElementById('branch').value = branch || '';
+            document.getElementById('type').value = type || '';
+            document.getElementById('classroom_lab_id').value = classroomLabId || '';
+            document.getElementById('date').value = date || '';
+            
+
+            // Update form title and show it
+            document.getElementById('formTitle').innerText = 'Edit Course';
+            document.getElementById('courseFormSection').style.display = 'block';
+        }
+
+        function slotClicked(day, slot, courseId, name, teacherId, branch, section, year, semester, type, classroomLabId, date) {
+            // Reset previously highlighted slots
+            document.querySelectorAll('td').forEach(td => {
+                td.style.backgroundColor = ''; // Remove any previous highlights
+            });
+
+            // Highlight the clicked slot
+            event.currentTarget.style.backgroundColor = '#d1ecf1'; // Light blue highlight for clarity
+
+            // Check if courseId is empty for an empty slot
+            if (!courseId) {
+                // Show an option to add a course
+                addCourse(day, slot);
+            }
+        }
+    </script>   
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#teacher_name').select2({
+                placeholder: 'Search by Teacher Name',
+                allowClear: true,
+                width: '100%' // Ensures the dropdown takes up the full width of its container
+            });
+        });
+    </script>
 </body>
 </html>

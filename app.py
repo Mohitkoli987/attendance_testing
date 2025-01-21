@@ -2423,13 +2423,22 @@ def admin_view_courses():
                         timetable[day][slot].append({
                             "teacher_short_name": course['teacher_short_name'],  # Now using teacher's name
                             "course_name": course['name'],
-                            "room_id": course['classroom_lab_id']
+                            "room_id": course['classroom_lab_id'],
+                            "course_id": course['id'],
+                            "teacher_id": course['teacher_id'],
+                            "branch": course['branch'],
+                            "section": course['section'],
+                            "year": course['year'],
+                            "semester": course['semester'],
+                            "date": course['date'],
+                            "type": course['type']
                         })
 
     cur.close()
 
     # Render the template
     return render_template('admin/admin_view_courses.html', courses=courses, teachers=teachers, timetable=timetable)
+
 
 @app.route('/admin/add_course', methods=['GET', 'POST'])
 def admin_add_course():
